@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HireAI — The First AI Staffing Agency</title>
+<meta name="description" content="Hire your first AI employee. 24/7 receptionist, sales rep, or customer service agent for €99/month. No setup, no code, works in 50+ languages.">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0b;
+  --surface: #111113;
+  --surface2: #1a1a1e;
+  --border: #2a2a2e;
+  --text: #f0efe9;
+  --text-dim: #8a8a8e;
+  --accent: #4ade80;
+  --accent2: #22c55e;
+  --accent-glow: rgba(74, 222, 128, 0.15);
+  --warm: #f59e0b;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* === GRAIN OVERLAY === */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* === NAV === */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  padding: 1.2rem 2rem;
+  display: flex; justify-content: space-between; align-items: center;
+  z-index: 100;
+  backdrop-filter: blur(20px);
+  background: rgba(10, 10, 11, 0.8);
+  border-bottom: 1px solid var(--border);
+}
+
+.logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.5rem;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.logo span { color: var(--accent); }
+
+nav a.cta-nav {
+  padding: 0.6rem 1.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: all 0.3s;
+}
+
+nav a.cta-nav:hover {
+  background: var(--accent2);
+  transform: translateY(-1px);
+}
+
+/* === HERO === */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 8rem 2rem 4rem;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -20%; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+  animation: fadeUp 0.8s ease;
+}
+
+.badge .dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+h1 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  line-height: 1.05;
+  font-weight: 400;
+  max-width: 900px;
+  animation: fadeUp 0.8s ease 0.1s both;
+}
+
+h1 em {
+  font-style: italic;
+  color: var(--accent);
+}
+
+.hero p {
+  font-size: 1.15rem;
+  color: var(--text-dim);
+  max-width: 520px;
+  margin: 1.5rem auto 2.5rem;
+  font-weight: 300;
+  animation: fadeUp 0.8s ease 0.2s both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-cta {
+  display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  animation: fadeUp 0.8s ease 0.3s both;
+}
+
+.btn-primary {
+  padding: 1rem 2.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-primary:hover { background: var(--accent2); transform: translateY(-2px); box-shadow: 0 10px 40px var(--accent-glow); }
+
+.btn-secondary {
+  padding: 1rem 2.5rem;
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-secondary:hover { border-color: var(--text-dim); }
+
+/* === STATS BAR === */
+.stats {
+  display: flex; justify-content: center; gap: 4rem; flex-wrap: wrap;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin: 0 2rem;
+}
+
+.stat { text-align: center; }
+.stat .num {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2.5rem;
+  color: var(--accent);
+}
+.stat .label {
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  margin-top: 0.3rem;
+}
+
+/* === SECTION COMMON === */
+section {
+  padding: 6rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.section-tag {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-family: 'Instrument Serif', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+h2 em { font-style: italic; color: var(--accent); }
+
+.section-desc {
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  max-width: 560px;
+  margin-bottom: 3rem;
+  font-weight: 300;
+}
+
+/* === EMPLOYEE CARDS === */
+.employees-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.emp-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  transition: all 0.4s;
+  position: relative;
+  overflow: hidden;
+}
+
+.emp-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.emp-card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.emp-card:hover::after { opacity: 1; }
+
+.emp-icon {
+  width: 48px; height: 48px;
+  background: var(--accent-glow);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 1.2rem;
+}
+
+.emp-card h3 {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.emp-card p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 1.2rem;
+}
+
+.emp-tasks {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.emp-tasks span {
+  padding: 0.3rem 0.7rem;
+  background: var(--surface2);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+
+.emp-price {
+  display: flex; align-items: baseline; gap: 0.3rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.emp-price .amount {
+  font-family: 'Instrument Serif', serif;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.emp-price .period {
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+/* === COMPARISON === */
+.compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 2rem;
+}
+
+.compare-table th, .compare-table td {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.compare-table th {
+  color: var(--text-dim);
+  font-weight: 500;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.compare-table td:first-child { color: var(--text-dim); }
+.compare-table .human { color: #ef4444; }
+.compare-table .ai { color: var(--accent); font-weight: 600; }
+
+/* === HOW IT WORKS === */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  counter-reset: step;
+}
+
+.step {
+  position: relative;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  counter-increment: step;
+}
+
+.step::before {
+  content: counter(step);
+  font-family: 'Instrument Serif', serif;
+  font-size: 4rem;
+  color: var(--accent);
+  opacity: 0.2;
+  position: absolute;
+  top: 0.5rem; right: 1.5rem;
+}
+
+.step h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.step p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+}
+
+/* === CTA SECTION === */
+.cta-section {
+  text-align: center;
+  padding: 6rem 2rem;
+  position: relative;
+}
+
+.cta-section::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.cta-box {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  position: relative;
+}
+
+.cta-box h2 { margin-bottom: 1rem; }
+
+.cta-box p {
+  color: var(--text-dim);
+  margin-bottom: 2rem;
+}
+
+.email-form {
+  display: flex; gap: 0.8rem; max-width: 440px; margin: 0 auto;
+}
+
+.email-form input {
+  flex: 1;
+  padding: 0.9rem 1.2rem;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--text);
+  font-size: 0.9rem;
+  outline: none;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.email-form input:focus { border-color: var(--accent); }
+
+.email-form button {
+  padding: 0.9rem 1.8rem;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 100px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.email-form button:hover { background: var(--accent2); }
+
+.waitlist-note {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+
+/* === FOOTER === */
+footer {
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.85rem;
+}
+
+footer a { color: var(--accent); text-decoration: none; }
+
+/* === MOBILE === */
+@media (max-width: 768px) {
+  nav { padding: 1rem; }
+  .stats { gap: 2rem; }
+  .email-form { flex-direction: column; }
+  .compare-table { font-size: 0.8rem; }
+  .compare-table th, .compare-table td { padding: 0.7rem; }
+  section { padding: 4rem 1.5rem; }
+}
+
+/* === SCROLL ANIMATIONS === */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Hire<span>AI</span></a>
+  <a href="#waitlist" class="cta-nav">Join Waitlist</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="badge"><span class="dot"></span> Now accepting early access applications</div>
+  <h1>Your first <em>AI employee</em> starts today</h1>
+  <p>The world's first AI staffing agency. Hire a receptionist, sales rep, or support agent that works 24/7, speaks 50+ languages, and costs less than your coffee budget.</p>
+  <div class="hero-cta">
+    <a href="#waitlist" class="btn-primary">Hire Your First AI →</a>
+    <a href="#employees" class="btn-secondary">See Available Roles</a>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stat">
+    <div class="num">95%</div>
+    <div class="label">Cost reduction vs human staff</div>
+  </div>
+  <div class="stat">
+    <div class="num">24/7</div>
+    <div class="label">Always on, never sick</div>
+  </div>
+  <div class="stat">
+    <div class="num">50+</div>
+    <div class="label">Languages supported</div>
+  </div>
+  <div class="stat">
+    <div class="num">5 min</div>
+    <div class="label">Setup to first conversation</div>
+  </div>
+</div>
+
+<!-- EMPLOYEES -->
+<section id="employees">
+  <div class="section-tag reveal">Available Positions</div>
+  <h2 class="reveal">Hire for any <em>role</em></h2>
+  <p class="section-desc reveal">Each AI employee is pre-trained for their role. Just tell them about your business and they start working immediately.</p>
+
+  <div class="employees-grid">
+    <div class="emp-card reveal">
+      <div class="emp-icon">📞</div>
+      <h3>AI Receptionist</h3>
+      <p>Answers calls, WhatsApp, and chat. Books appointments. Sends reminders. Handles cancellations. Never puts anyone on hold.</p>
+      <div class="emp-tasks">
+        <span>Phone</span><span>WhatsApp</span><span>Appointments</span><span>Reminders</span>
+      </div>
+      <div class="emp-price">
+        <span class="amount">€99</span>
+        <span class="period">/month</span>
+      </div>
+    </div>
+
+    <div class="emp-card reveal">
+      <div class="emp-icon">💼</div>
+      <h3>AI Sales Rep</h3>
+      <p>Finds leads, sends outreach, follows up automatically. Qualifies prospects and books meetings on your calendar.</p>
+      <div class="emp-tasks">
+        <span>Lead Gen</span><span>Cold Outreach</span><span>Follow-up</span><span>Booking</span>
+      </div>
+      <div class="emp-price">
+        <span class="amount">€199</span>
+        <span class="period">/month</span>
+      </div>
+    </div>
+
+    <div class="emp-card reveal">
+      <div class="emp-icon">💬</div>
+      <h3>AI Support Agent</h3>
+      <p>Handles customer questions, complaints, and reviews. Escalates complex issues to you. Turns angry customers into fans.</p>
+      <div class="emp-tasks">
+        <span>Live Chat</span><span>Email</span><span>Reviews</span><span>FAQ</span>
+      </div>
+      <div class="emp-price">
+        <span class="amount">€149</span>
+        <span class="period">/month</span>
+      </div>
+    </div>
+
+    <div class="emp-card reveal">
+      <div class="emp-icon">📱</div>
+      <h3>AI Social Manager</h3>
+      <p>Creates posts, schedules content, responds to comments and DMs. Keeps your social presence alive without your time.</p>
+      <div class="emp-tasks">
+        <span>Content</span><span>Scheduling</span><span>DMs</span><span>Analytics</span>
+      </div>
+      <div class="emp-price">
+        <span class="amount">€149</span>
+        <span class="period">/month</span>
+      </div>
+    </div>
+
+    <div class="emp-card reveal">
+      <div class="emp-icon">📊</div>
+      <h3>AI Admin Assistant</h3>
+      <p>Invoices, expense tracking, appointment reminders, email management. Your back-office on autopilot.</p>
+      <div class="emp-tasks">
+        <span>Invoices</span><span>Email</span><span>Scheduling</span><span>Reports</span>
+      </div>
+      <div class="emp-price">
+        <span class="amount">€99</span>
+        <span class="period">/month</span>
+      </div>
+    </div>
+
+    <div class="emp-card reveal">
+      <div class="emp-icon">🔍</div>
+      <h3>AI Recruiter</h3>
+      <p>Screens CVs, ranks candidates, generates interview questions, and manages the pipeline. Hire faster, hire better.</p>
+      <div class="emp-tasks">
+        <span>CV Screening</span><span>Ranking</span><span>Interviews</span><span>Pipeline</span>
+      </div>
+      <div class="emp-price">
+        <span class="amount">€249</span>
+        <span class="period">/month</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section>
+  <div class="section-tag reveal">Why Switch</div>
+  <h2 class="reveal">Human employee vs <em>AI employee</em></h2>
+  <p class="section-desc reveal">We're not replacing your team. We're giving you staff you could never afford.</p>
+
+  <table class="compare-table reveal">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Human Employee</th>
+        <th>AI Employee</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Monthly cost</td>
+        <td class="human">€2,000 - €3,500</td>
+        <td class="ai">€99 - €249</td>
+      </tr>
+      <tr>
+        <td>Availability</td>
+        <td class="human">40 hrs/week</td>
+        <td class="ai">24/7/365</td>
+      </tr>
+      <tr>
+        <td>Languages</td>
+        <td class="human">1-3</td>
+        <td class="ai">50+</td>
+      </tr>
+      <tr>
+        <td>Sick days</td>
+        <td class="human">15-25/year</td>
+        <td class="ai">0</td>
+      </tr>
+      <tr>
+        <td>Setup time</td>
+        <td class="human">2-4 weeks</td>
+        <td class="ai">5 minutes</td>
+      </tr>
+      <tr>
+        <td>Scales instantly</td>
+        <td class="human">No — hire more</td>
+        <td class="ai">Yes — unlimited</td>
+      </tr>
+      <tr>
+        <td>Cancel anytime</td>
+        <td class="human">Notice period + severance</td>
+        <td class="ai">One click</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-tag reveal">How It Works</div>
+  <h2 class="reveal">Hiring takes <em>5 minutes</em></h2>
+
+  <div class="steps">
+    <div class="step reveal">
+      <h3>Choose a role</h3>
+      <p>Pick the AI employee you need: receptionist, sales rep, support agent, or any other role.</p>
+    </div>
+    <div class="step reveal">
+      <h3>Tell them about you</h3>
+      <p>Business name, services, hours, prices, tone of voice. That's it. No technical setup needed.</p>
+    </div>
+    <div class="step reveal">
+      <h3>They start working</h3>
+      <p>Your AI employee goes live immediately. Answering calls, booking appointments, closing leads. 24/7.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="cta-box reveal">
+    <div class="section-tag">Early Access</div>
+    <h2>Be the first to <em>hire</em></h2>
+    <p>Join the waitlist. First 100 businesses get 50% off their first AI employee — forever.</p>
+    <form class="email-form" onsubmit="handleSubmit(event)">
+      <input type="email" placeholder="your@email.com" required id="email-input">
+      <button type="submit">Join Waitlist</button>
+    </form>
+    <p class="waitlist-note">No credit card. No setup. Just early access.</p>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 HireAI — A <a href="https://techvision.nl" target="_blank">TechVision</a> company. The future of work, available today.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Form handler
+function handleSubmit(e) {
+  e.preventDefault();
+  const email = document.getElementById('email-input').value;
+  const btn = e.target.querySelector('button');
+  btn.textContent = '✓ You\'re in!';
+  btn.style.background = '#22c55e';
+  // Store in localStorage as backup
+  const waitlist = JSON.parse(localStorage.getItem('hireai-waitlist') || '[]');
+  waitlist.push({ email, date: new Date().toISOString() });
+  localStorage.setItem('hireai-waitlist', JSON.stringify(waitlist));
+  setTimeout(() => {
+    btn.textContent = 'Join Waitlist';
+    btn.style.background = '';
+    document.getElementById('email-input').value = '';
+  }, 3000);
+}
+</script>
+
+</body>
+</html>
